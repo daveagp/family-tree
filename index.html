@@ -1,0 +1,124 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html" charset="utf-8" />
+<script src="family.js" type="text/javascript"></script>
+<style>
+.label {
+  font-family: 'Arial', 'sans-serif';
+  text-align: center;
+  /* vertical-align: middle; maybe not needed for this application */
+  position: absolute;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 5px;
+  cursor: pointer;
+}
+.swap-axes {
+  -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.label img {
+  max-width: 70px;
+}
+.lifespan {
+  font-size: 10pt;
+  white-space: nowrap;
+}
+#control-panel {
+  position: fixed;
+  width: 100%;
+  background: #f7f7f7;
+  border-bottom: 1px solid black;
+  z-index: 10;
+  padding: 8px;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+.pos-root {
+  border-color: yellow;
+  border-width: 5px;
+}
+.label:hover {
+  background: #CCF;
+  z-index: 10;
+}
+.pos-ancestor {
+  border-color: orange;
+  border-width: 5px;
+}
+.text-ancestor {
+  color: orange;
+}
+.pos-blood {
+  border-color: red;
+  border-width: 3px;
+}
+.text-blood {
+  color: red;
+}
+.pos-descendant {
+  border-color: olive;
+  border-width: 5px;
+}
+.text-descendant {
+  color: olive;
+}
+.pos-other {
+  border-color: black;
+  border-width: 1px;
+}
+.text-other {
+  color: black;
+}
+.drawn-line {
+  z-index: -1;
+  border-width: 1px !important;
+}
+.label.has-info {
+  background-image: url('info-icon.png');
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 10px 10px;
+}
+.label:hover .info {
+  display: block;
+}
+#panel-bottom ul {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+</style>
+</head>
+<title>Family Tree</title>
+<body>
+<div id="control-panel">
+<div id="panel-top">
+<span>Family tree of <b><span id="root-name"></span></b></span>
+<span>and
+<select id="detail-picker" onchange="updateDetail()">
+  <option value="0">descendants, ancestors</option>
+  <option value="1">descendants, ancestors + their children, siblings</option>
+  <option value="2">descendants, ancestors + their grandchildren, cousins, nieces/nephews</option>
+  <option value="3">descendants, ancestors + their great-grandchildren, 2nd cousins</option>
+  <option value="Infinity">descendants, ancestors + all descendants of ancestors</option>
+  <option value="Everyone">everyone</option>
+</select>
+</span>
+<span id="tree-information"></span>
+</div>
+<div id="panel-bottom">
+<div id="info-pane-placeholder">
+<i>Hover your mouse on a person with <img src="info-icon.png" height="12px"> for their information</i>
+</div>
+<div id="info-pane" style="display: none">About <i><span id="info-pane-name"></span></i>:
+<span id="info-pane-details"></span>
+</div>
+</div>
+</body>
+</html>

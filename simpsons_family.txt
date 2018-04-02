@@ -1,0 +1,651 @@
+Homer Simpson + Marge Simpson
+ c: Bart Simpson#older
+ n: blah blah blah blah blah
+Homer Simpson
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+Marge Simpson
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Bart Simpson#older
+ l: 1756-
+Bart Simpson#older + Lisa Simpson
+ c: Maggie Simpson, Abraham Simpson II#older
+Abraham Simpson II#older
+ l: 1787-
+Lisa Simpson
+ l: 1751-1843
+Maggie Simpson
+ l: 1781-1859
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Ned Flanders + Charles Montgomery Burns
+ c: Krusty the Clown, Moe Szyslak
+ n: blah blah blah blah blah blah blah blah
+Moe Szyslak
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Moe Szyslak + Seymour Skinner#wife of William Evans
+ c: Milhouse Van Houten, Edna Krabappel, Apu Nahasapeemapetilon#Jr.
+Apu Nahasapeemapetilon#Jr.
+ l: 1788-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Edna Krabappel
+ l: 1786-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Milhouse Van Houten
+ l: 178{1/3}-1863
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Maggie Simpson + Milhouse Van Houten
+ c: Eleanor Abernathy, Akira, Ms. Albright, Woody Allen, Tattoo Annie, Aristotle Amadopolis, State Comptroller Atkins
+ n: blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Eleanor Abernathy
+ l: 1805-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Akira
+ l: 1813-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Tattoo Annie
+ l: 1823-1846
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Woody Allen
+ l: 1817-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Ms. Albright
+ l: 1816-1819
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Mary Bailey
+ l: 1824-1886
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Aristotle Amadopolis
+ l: 1827-1902
+ p: simpsons/101.png
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters blah blah
+Mary Bailey + Aristotle Amadopolis
+ n: blah blah blah blah blah blah blah blah blah
+ c: Jasper Beardly, Benjamin (nerd), Bill (KBBL DJ), Billy (actor), Birch Barlow#Jr., Black Weasel#Jr., Blue-Haired Lawyer, Patty Bouvier, Selma Bouvier, Cowboy Bob
+Selma Bouvier
+ n: blah blah blah
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ l: 1881-
+Jasper Beardly
+ n: blah blah blah blah
+ p: simpsons/41.png
+ l: 1848-1884
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Jasper Beardly + Robert Terwilliger
+ c: Booberella
+ n: blah blah blah blah blah blah blah blah blah blah
+Booberella
+ p: simpsons/110.png
+ l: Feb 4 1883-Feb 2 1967
+ n: blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah blah blah blah blah blah blah blah blah
+Benjamin (nerd)
+ n: blah blah blah blah blah blah blah
+ l: 1849-1885
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Bill (KBBL DJ)
+ l: 185{0/1}-May 13, 1891
+ n: blah blah
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Billy (actor)
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ l: 1854-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Birch Barlow#Jr.
+ n: blah blah blah blah blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters blah
+ l: 1857-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Black Weasel#Jr.
+ n: blah blah blah blah blah
+ l: 1860-
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Blue-Haired Lawyer
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ n: blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ l: 1862-
+Blue-Haired Lawyer + Wendell Borton
+Patty Bouvier
+ n: blah blah blah blah blah blah blah
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ l: 186{3/5}-
+Brittany Brockman#Sr.
+ l: 1849-1894
+ n: blah blah blah blah
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Bill (KBBL DJ) + Brittany Brockman#Sr.
+ c: Don Brodka, Lucille Botzcowski, Bumblebee Man#Jr., Capital City Goofball
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+Carl Carlson
+ l: 1852-Dec 30, 1930
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ p: simpsons/16.png
+Brittany Brockman#Sr. + Carl Carlson
+Don Brodka
+ l: 1879-1961
+ n: blah blah blah blah blah blah blah
+ p: simpsons/25.png
+Cesar
+ l: 1880-1966
+ p: simpsons/178.png
+Don Brodka + Cesar
+ c: Gary Chalmers, Charlie (SNPP), Chazz Busby, Scott Christian, Sebastian Cobb, Colin, Dr. Hector von Colossus
+Gary Chalmers
+ l: 1902-1981
+ n: blah blah blah blah blah blah
+Cora
+ l: 1911-1974
+Gary Chalmers + Cora
+ c: Mr. Costington
+Mr. Costington + Arthur Crandall
+ c: Joey Crusher, Database
+ n: blah
+Joey Crusher
+ l: 1982-
+ p: simpsons/185.png
+Database
+ l: 1985-
+ p: simpsons/24.png
+Mr. Costington
+ p: simpsons/213.png
+Charlie (SNPP) + Declan Desmond
+ c: Dewey Largo, Dwight Diddlehopper, Disco Stu
+Chazz Busby + Doug (nerd)
+ c: Duffman, Eddie
+Scott Christian
+ p: simpsons/201.png
+Scott Christian + Happy Little Elves
+ c: Ernst
+Sebastian Cobb + Fat Tony
+ c: Fallout Boy
+Colin
+ n: blah blah
+Colin + Frankie the Squealer
+Dr. Hector von Colossus + Maude Flanders
+Lucille Botzcowski
+ l: 1883-1929
+ n: blah blah blah blah blah blah blah
+ p: simpsons/271.png
+Rod Flanders + Lucille Botzcowski
+Rod Flanders
+ p: simpsons/137.png
+Bumblebee Man#Jr.
+ l: August 7, 1887-March 4, 1977
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ p: simpsons/117.png
+Todd Flanders + ?#1
+ c: Doris Freedman
+Doris Freedman
+ n: blah blah blah blah blah blah blah blah blah blah blah blah
+ l: Sep 18, 1888-May 17, 1925
+ p: simpsons/130.png
+Doris Freedman + Bumblebee Man#Jr.
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ c: Jonathan Frink, Frog Prince
+Gabbo
+ l: May 30, 1883-October 9, 1983
+ n: blah blah blah blah blah blah blah
+ p: simpsons/115.png
+Bumblebee Man#Jr. + Gabbo
+ n: blah blah blah blah blah blah blah blah blah
+Capital City Goofball
+ l: 1889-1981
+ n: blah blah blah blah blah blah blah blah blah blah blah blah
+ p: simpsons/164.png
+ n: blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Gary (nerd)
+ l: 1887-1972
+Capital City Goofball + Gary (nerd)
+ c: Gavin, Alice Glick, Gloria Jailbird, Gloria (White Christmas Blues)
+Gavin
+ l: 1916-June 25, 2014
+ p: simpsons/118.png
+ n: blah blah blah blah
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Gavin + Gloria's Husband
+ c: God
+Grady + God
+God + ?#2
+ c: Frank Grimes, Frank Grimes Jr., Matt Groening (character)
+Alice Glick
+ l: 1920-November 2007
+ p: simpsons/71.png
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah
+Alice Glick + Barney Gumble
+ c: Gil Gunderson, Gunter, Handsome Pete, Judge Constance Harm
+Gil Gunderson + Herman Hermann
+ c: Bernice Hibbert, Julius Hibbert, Elizabeth Hoover, Lionel Hutz#Distinct from aunt
+Gunter + Itchy
+ c: Jack Lassen, Jeremy Jailbird
+Handsome Pete + Snake Jailbird
+ c: Jake the Barber, Jacques, Comic Book Guy
+Judge Constance Harm + Jeremy Freedman
+ c: Jericho, Joey (mafia), John (Homer's Phobia)
+Gloria Jailbird
+ l: 1922-
+Gloria Jailbird + Jimbo Jones
+Gloria (White Christmas Blues)
+ l: 1926-
+Gloria (White Christmas Blues) + Rachel Jordan
+ c: Julio, Kang
+Frog Prince
+ l: February 7, 1918-July 10, 2015
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ p: simpsons/224.png
+Jonathan Frink
+ l: August 5, 1915-December 24, 1965
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ p: simpsons/85.png
+Princess Kashmir + Jonathan Frink
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ c: Kent Brockman, Kodos, Leon Kompowsky
+?#3 + Coach Krupt
+ c: Princess Kashmir, Rabbi Hyman Krustofsky
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+Coach Krupt
+ l: -~1920
+Princess Kashmir
+ l: 1916-September 12, 1987
+ p: simpsons/23.png
+Rabbi Hyman Krustofsky
+ l: ~1918-
+Kodos
+ l: December 7, 1949-1950
+ n: blah blah blah
+Kent Brockman
+ l: February 21, 1947-February 17, 2013
+ p: simpsons/76.png
+Leon Kompowsky
+ l: May 5, 1953-September 15, 1995
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ p: simpsons/82.png
+Kumiko Albertson + Kent Brockman
+ n: blah blah blah blah blah blah blah blah blah blah
+Kent Brockman + Cookie Kwan
+ c: Chester J. Lampwick
+ n: blah blah blah blah
+Cookie Kwan
+ p: simpsons/50.png
+Chester J. Lampwick
+ l: October 21, 1998-
+ p: simpsons/189.png
+Lard Lad + Leon Kompowsky
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ c: Larry (barfly), The Leader, Legs
+Larry (barfly)
+ l: May 7, 1982-
+ p: simpsons/51.png
+The Leader
+ l: March 12, 1985-
+ p: simpsons/155.png
+Legs
+ l: March 12, 1987-
+ p: simpsons/205.png
+Lard Lad
+ l: August 21 1955-
+ n: blah blah blah blah blah
+ p: simpsons/130.png
+Larry (barfly) + Lenny Leonard
+ n: blah blah blah blah
+ c: Leopold
+Leopold
+ l: March 21, 2017-
+ n: blah blah blah blah
+ p: simpsons/28.png
+The Leader + Leprechaun
+ n: blah blah blah blah
+Leprechaun
+ p: simpsons/269.png
+ n: blah blah blah
+ l: July 8, 198?-
+Lewis Clark + Ling Bouvier
+ c: Professor Lombardo, Lou
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+Lou
+ p: simpsons/202.png
+ l: 1923-November 30 2014
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Lou + Louie (mafia)
+ c: Helen Lovejoy, Jessica Lovejoy, Lowblow, Luann Van Houten, Lugash
+Professor Lombardo
+ p: simpsons/40.png
+ l: Jan 29, 1921-Feb 28, 2000
+Professor Lombardo + Lurleen Lumpkin
+ c: Lyle Lanley, Horatio McCallister, Mr. McGreg
+Lurleen Lumpkin
+ p: simpsons/170.png
+Mr. McGreg
+ p: simpsons/16.png
+Horatio McCallister
+ p: simpsons/164.png
+Horatio McCallister + Just Stamp the Ticket Man
+ c: Jack Marley
+Jack Marley
+ l: 2005-
+ p: simpsons/248.png
+Lyle Lanley
+ p: simpsons/158.png
+Marty (KBBL DJ) + Lyle Lanley
+ c: Mayor Quimby's Body Guards, Troy McClure
+Lyle Lanley + Melvin Van Horne
+Melvin Van Horne + Roger Meyers Jr.
+ c: Milo
+Hans Moleman + ?#4
+ c: Ling Bouvier
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+Hans Moleman
+ p: simpsons/43.png
+Marvin Monroe
+ p: simpsons/22.png
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ n: blah blah blah blah blah blah blah blah blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+Ling Bouvier + Marvin Monroe
+ c: Mervin Monroe
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+Ling Bouvier
+ p: simpsons/38.png
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ l: 1902/07/07-198?
+Mervin Monroe
+ l: 1930/12/3-
+ n: blah blah blah blah
+ p: simpsons/247.png
+Nelson Muntz
+ p: simpsons/257.png
+ n: blah blah blah blah blah blah
+Eddie Muntz
+ p: simpsons/38.png
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+Nelson Muntz + Eddie Muntz
+ c: Mrs. Muntz, Captain Lance Murdock#Sr., Bleeding Gums Murphy
+ n: blah blah blah blah blah blah blah blah
+Mrs. Muntz
+ l: 1926-Aug 24 2016
+ n: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+ n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
+ p: simpsons/26.png
+Captain Lance Murdock#Sr.
+ l: 1928/2/12-1978/12/25
+ n: blah blah blah blah blah blah blah blah blah blah
+ p: simpsons/87.png
+Mervin Monroe + Captain Lance Murdock#Sr.
+ n: blah blah
+ c: Lindsey Naegle, Lard Lad, Manjula Nahasapeemapetilon
+Sanjay Nahasapeemapetilon + The Nahasapeemapetilon Octuplets
+ c: Old Jewish Man
+Old Jewish Man
+ l: 1969/2/19-
+ n: blah blah blah blah blah
+ p: simpsons/258.png
+Manjula Nahasapeemapetilon
+ l: 1965/4/1-
+ n: blah blah blah blah blah
+ p: simpsons/101.png
+Old Jewish Man + Manjula Nahasapeemapetilon
+ n: blah blah
+ c: Number One, Opal, Otto Mann
+Number One
+ l: 1999/9/29-
+ n: blah blah blah blah
+ p: simpsons/224.png
+Opal
+ l: 2002/5/25-
+ n: blah blah blah blah
+ p: simpsons/116.png
+Otto Mann
+ l: 2004/7/28-
+ n: blah blah blah blah
+ p: simpsons/209.png
+Lindsey Naegle
+ l: 1953/9/7-
+ n: blah blah blah blah blah
+ p: simpsons/106.png
+MacArthur Parker + Lindsey Naegle
+ n: blah blah blah blah
+ c: Patches
+MacArthur Parker
+ p: simpsons/53.png
+Patches
+ l: 1980/10/21-
+ n: blah blah blah blah
+ p: simpsons/75.png
+Patches + Lois Pennycandy
+ n: blah blah blah blah
+Lois Pennycandy
+ p: simpsons/58.png
+ l: March 10, 1981-
+Lindsey Naegle + Phillips
+ n: blah blah blah blah
+Phillips + ?#5
+ c: Plopper
+Phillips
+ p: simpsons/51.png
+ l: November 25, 19??-
+Plopper
+ l: 1982/11/25-
+ n: blah blah blah blah
+ p: simpsons/136.png
+Plopper + Brunella Pommelhorst
+ n: blah blah blah blah
+Brunella Pommelhorst
+ p: simpsons/211.png
+ l: May 5, 1986-
+ n: blah blah blah blah
+Poochie + Ruth Powers
+ c: Janey Powell, Martha Prince, Martin Prince, Martin Prince Sr., Principal Dondelinger
+Ruth Powers
+ p: simpsons/174.png
+Janey Powell
+ p: simpsons/73.png
+Poochie
+ p: simpsons/7.png
+Martha Prince
+ p: simpsons/56.png
+Principal Dondelinger
+ p: simpsons/171.png
+ l: 1952/6/29-
+ n: blah blah blah blah
+J. Loren Pryor + Janey Powell
+ c: Corporal Punishment, Arnie Pye, Pyro, Freddy Quimby
+Corporal Punishment
+ p: simpsons/249.png
+Arnie Pye
+ p: simpsons/283.png
+Corporal Punishment + Joe Quimby
+ c: Martha Quimby, Radioactive Man (character)
+Martha Quimby
+ p: simpsons/5.png
+Arnie Pye + Raphael
+ c: Rasputin the Friendly Russian, Rex Banner
+Raphael
+ p: simpsons/134.png
+Pyro + Francine Rhenquist
+ c: The Rich Texan
+Pyro
+ p: simpsons/31.png
+Freddy Quimby + Richard
+ c: Roy, Luigi Risotto
+Martha Prince + Nick Riviera
+ c: "Russ Cargill", Sam (barfly), Gerald Samson
+"Russ Cargill"
+ p: simpsons/59.png
+Gerald Samson
+ p: simpsons/136.png
+"Russ Cargill" + Ms. Samson#2
+ c: Hank Scorpio, Arnold Schwarzenegger
+Hank Scorpio
+ p: simpsons/283.png
+Ms. Samson#2
+ p: simpsons/227.png
+Sam (barfly) + Scratchy
+ c: Serak the Preparer, Shary Bobbins
+Shauna Chalmers
+ p: simpsons/129.png
+Gerald Samson + Shelby
+ c: Sherri Mackleberry
+Jay Sherman + Martin Prince
+ c: Dave Shutton, Mindy Simmons, Agnes Skinner, Llewellyn Sinclair
+Dave Shutton
+ p: simpsons/178.png
+Agnes Skinner
+ p: simpsons/56.png
+Mindy Simmons
+ p: simpsons/271.png
+Llewellyn Sinclair
+ p: simpsons/24.png
+Dave Shutton + Smilin' Joe Fission
+Mindy Simmons + Waylon Smithers Jr.
+ c: Roy Snyder
+Waylon Smithers Jr.
+ p: simpsons/256.png
+Bomb Disarming Robot + Martin Prince Sr.
+ c: Jebediah Springfield, Miss Springfield, Brandine Spuckler
+Martin Prince Sr.
+ p: simpsons/220.png
+Brandine Spuckler
+ p: simpsons/18.png
+Jebediah Springfield + Cletus Spuckler
+ c: Mary Spuckler, Dolph Starbeam
+Mary Spuckler
+ p: simpsons/100.png
+Miss Springfield + Lucius Sweet
+ c: Shauna Chalmers, Drederick Tatum
+Drederick Tatum
+ p: simpsons/254.png
+Lucius Sweet
+ p: simpsons/274.png
+Principal Dondelinger + Allison Taylor
+ n: blah blah blah blah blah blah
+ c: Mr. Teeny, Lenny Leonard, Terri Mackleberry
+Mr. Teeny
+ l: 1977/7/1-
+ n: blah blah blah
+ p: simpsons/119.png
+Mr. Teeny + Cecil Terwilliger
+Cecil Terwilliger
+ p: simpsons/114.png
+Lenny Leonard
+ l: 1979/7/8-
+ n: blah blah blah
+ p: simpsons/235.png
+Terri Mackleberry
+ l: 23 Mehr, 1985-
+ n: blah blah blah
+ p: simpsons/105.png
+Francesca Terwilliger + Terri Mackleberry
+ n: blah blah blah blah blah blah
+Gino Terwilliger + Johnny Tightlips
+ c: Timothy Lovejoy Jr., Francesca Terwilliger
+Johnny Tightlips
+ p: simpsons/203.png
+Gino Terwilliger
+ p: simpsons/28.png
+Francesca Terwilliger
+ p: simpsons/281.png
+Timothy Lovejoy Jr. + Tina Ballerina
+ c: Titania
+Timothy Lovejoy Jr.
+ p: simpsons/45.png
+Tina Ballerina
+ p: simpsons/210.png
+Allison Taylor
+ l: 1943/9/1-
+ n: blah blah blah
+ p: simpsons/150.png
+Toshiro + Ugolin
+ c: Kirk Van Houten, Mr. Vanderbilt, Allison Taylor, Mrs. Vanderbilt, Dr. Velimirovic, Gina Vendetti
+Mr. Vanderbilt
+ p: simpsons/135.png
+Kirk Van Houten
+ p: simpsons/281.png
+Toshiro
+ p: simpsons/53.png
+Ugolin
+ p: simpsons/31.png
+Ian (Very Tall Man) + Kirk Van Houten
+ c: Veterinarian, Poor Violet, Don Vittorio DiMaggio, The Warden
+ n: blah
+Ian (Very Tall Man)
+ p: simpsons/285.png
+The Warden
+ l: February 15, 1965-
+ p: simpsons/17.png
+Veterinarian
+ l: February 26, 1957-2014
+ p: simpsons/287.png
+Kirk Van Houten + Professor Werner von Brawn
+ c: Alex Whitney, Groundskeeper Willie, Clancy Wiggum
+Clancy Wiggum
+ p: simpsons/41.png
+Groundskeeper Willie
+ p: simpsons/160.png
+Alex Whitney
+ p: simpsons/36.png
+Professor Werner von Brawn
+ p: simpsons/63.png
+Veterinarian + Ralph Wiggum
+ c: Sarah Wiggum, Mr. Winfield, Sylvia Winfield
+Ralph Wiggum
+ p: simpsons/256.png
+Sarah Wiggum + Emily Winthrop
+ c: ?#Negar Baby 1, ?#Negar Baby 2
+?#Negar Baby 1
+ p: simpsons/210.png
+?#Negar Baby 2
+ p: simpsons/79.png
+Emily Winthrop
+ p: simpsons/4.png
+Sarah Wiggum
+ p: simpsons/298.png
+Poor Violet + Greta Wolfcastle
+ c: Rainier Wolfcastle, Medicine Woman
+Don Vittorio DiMaggio + Yellow Weasel
+Don Vittorio DiMaggio
+ p: simpsons/240.png
+The Warden + The Yes Guy
+ c: Artie Ziff, Üter Zörker
+The Yes Guy
+ p: simpsons/113.png
+Artie Ziff
+ p: simpsons/131.png
+Üter Zörker
+ p: simpsons/142.png
+Mr. Vanderbilt + Kearney Zzyzwicz
+ c: Kearney Zzyzwicz Jr., Mona Simpson, Herbert Powell, Abbie Simpson
+Mona Simpson
+ p: simpsons/174.png
+Herbert Powell
+ p: simpsons/183.png
+Abbie Simpson
+ p: simpsons/272.png
+Mrs. Vanderbilt + Picard Simpson
+ c: Kirk Simpson, Dulcine Simpson, Eckhardt Simpson, Gabby Crouse, Winifred Running Goat
+Mrs. Vanderbilt
+ p: simpsons/16.png
+Dr. Velimirovic + Yuma Hickman
+ c: Hortense Simpson, Hubert Simpson
+Gina Vendetti + Hugo Simpson I
+ c: Humphrey Little Goat, Hurt Leg Simpson Relative, Jane Nervous Goat
+Hugo Simpson I
+ p: simpsons/181.png
+Gina Vendetti
+ p: simpsons/156.png
+Humphrey Little Goat
+ p: simpsons/254.png
+Hurt Leg Simpson Relative
+ p: simpsons/221.png
+Jane Nervous Goat
+ p: simpsons/61.png
+Humphrey Little Goat + Jenda Simpson
+Jenda Simpson
+ p: simpsons/93.png
