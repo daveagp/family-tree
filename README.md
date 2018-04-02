@@ -49,3 +49,9 @@ n: Nuclear Safety Inspector in Sector 7G
 King George#Older + Mary of Teck
 c: King George#Younger
 ```
+
+## Limitations
+* This program can only handle topological trees, not marrying extended family or two marriages between families
+* Names shouldn't contain commas
+* If person X has two spouses, you need to list them as the first person in one couple and the second person in the other, because the rendering engine takes those positions as literal position instructions
+* This program can't handle someone who has had more than two spouses/partners
