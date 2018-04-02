@@ -35,13 +35,19 @@ Here's a simple example file with 2 entries (one couple, one person) and 5 peopl
 ```
 Homer Simpson + Marge Bouvier
 c: Lisa Simpson, Bart Simpson, Maggie Simpson
+n: Married while pregnant with Lisa
 Homer Simpson
 l: 1951-
 p: homer.jpg
 n: Nuclear Safety Inspector in Sector 7G
 ```
 
-## Tricks
+## UI
+* The bar at top allows switching the level of detail shown
+* Click on a person to make them the root of the tree
+* Hover over a person to show all notes for them and their pairings
+
+## Data Tricks
 * You can leave someone's name as `?` if you don't know it. (Should be a parent or child's name in a couple's entry.)
 * Lines in your family.txt starting with `#` are comments
 * Multiple people with the same name can be disambiguated by putting a `#` after their name, followed by a distinct identifier (which will not be rendered). Example:
@@ -49,8 +55,9 @@ n: Nuclear Safety Inspector in Sector 7G
 King George#Older + Mary of Teck
 c: King George#Younger
 ```
+* http/s URLs in `n:` notes lines automatically are turned into links
 
-## Limitations
+## Data Limitations
 * This program can only handle topological trees, not marrying extended family or two marriages between families
 * Names shouldn't contain commas
 * If person X has two spouses, you need to list them as the first person in one couple and the second person in the other, because the rendering engine takes those positions as literal position instructions
