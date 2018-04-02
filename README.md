@@ -62,3 +62,6 @@ c: King George#Younger
 * Names shouldn't contain commas
 * If person X has two spouses, you need to list them as the first person in one couple and the second person in the other, because the rendering engine takes those positions as literal position instructions
 * This program can't handle someone who has had more than two spouses/partners
+
+## Disclaimer
+Use your judgment when posting sensitive family information on the internet, e.g. you may consider using `.htaccess` or some other appropriate security.
