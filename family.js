@@ -49,15 +49,19 @@ function readInput(text) {
 	    throw "Multiple + signs in union: " + key;
 	}
 	toks = toks.map(x => x.trim());
-	if (toks.includes("")) {
+	if (toks.includes(""))
 	    throw "Misformatted line " + i + ": " + key;
-	}
+        if (key.includes(","))
+            throw "Names can't contain commas: " + key;
 	if (toks.length == 2) {
 	    // need to update name of union with ? so it can be referenced later
 	    if (toks[0] == '?') toks[0] = newMissingLabel();
 	    if (toks[1] == '?') toks[1] = newMissingLabel();
 	    key = toks[0] + ' + ' + toks[1];
-	}
+	} else {
+            if (result.hasOwnProperty(key))
+                throw "Multiple entries for name: " + key;
+        }
 	var value = [];
 	i += 1;
 	while (i < lines.length && lines[i].startsWith(' ')) {
@@ -662,6 +666,8 @@ function drawConnections(rootName, neighbours, divs, layout) {
 }
 
 function drawTree(entries, edges, divs, neighbours) {
+    if (!divs[rootName])
+        throw "Selected name not found in data: " + rootName;
     // Since classes affect div size, do it before layout.
     setPeopleClasses(rootName, neighbours, divs);
     var layout = computeLayout(edges, neighbours, divs);
