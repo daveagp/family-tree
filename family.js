@@ -1,8 +1,9 @@
 /* -*- mode: javascript; js-indent-level: 2 -*- */
+// @flow
 'use strict';
 
 // Override these settings:
-var familyDataFilename = "simpsons_family.txt"; // Your own family.txt
+var familyDataFilename = "simpsons-family.txt"; // Your own family.txt
 var defaultRootName = 'Leopold';                // Someone in your family
 var lineHeight = 280;  // 220 is better, but the Simpsons pngs are very vertical
 
