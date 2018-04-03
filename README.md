@@ -4,9 +4,9 @@
 https://daveagp.github.io/family-tree/index.html
 
 ## How to use
-* Change the first few lines of family.js
-* Fill out your family.txt
+* Create `family.txt` for your family
 * Put any photos into the `photos` directory
+* Change the first few lines of `family.js`
 
 ## Format of your family.txt file
 This file will contain
@@ -45,17 +45,17 @@ n: Nuclear Safety Inspector in Sector 7G
 ## UI
 * The bar at top allows switching the level of detail shown
 * Click on a person to make them the root of the tree
-* Hover over a person to show all notes for them and their pairings
+* Hover over a person to show all notes for them and their partners
 
 ## Data Tricks
 * You can leave someone's name as `?` if you don't know it. (Should be a parent or child's name in a couple's entry.)
-* Lines in your family.txt starting with `#` are comments
+* Put comments in your `family.txt` by starting them with `#`
 * Multiple people with the same name can be disambiguated by putting a `#` after their name, followed by a distinct identifier (which will not be rendered). Example:
 ```
 King George#Older + Mary of Teck
 c: King George#Younger
 ```
-* http/s URLs in `n:` notes lines automatically are turned into links
+* http/s URLs in `n:` notes lines automatically are turned into links. They can't contain spaces.
 
 ## Data Limitations
 * This program can only handle topological trees, not marrying extended family or two marriages between families
@@ -65,3 +65,6 @@ c: King George#Younger
 
 ## Disclaimer
 Use your judgment when posting sensitive family information on the internet, e.g. you may consider using `.htaccess` or some other appropriate security.
+
+## Thanks
+Thanks to The [Simpsons Wiki](http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters) for their rich dataset.
