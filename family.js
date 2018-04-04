@@ -826,59 +826,6 @@ function processFamilyTxt(family_txt) {
     readHash();
     redraw();
   };
-  // Uncomment this only if you want to generate a fake file from your data.
-  // writeFakeDebug(entries);
-}
-
-function writeFakeDebug(entries) {
-  asyncLoadTextFile("simpsons-names.txt",
-                    function(text) {processFakeDebug(entries, text);});
-}
-
-function processFakeDebug(entries, simpsonsNamesTxt) {
-  var numUsedSimpsons = 0;
-  var simpsons = simpsonsNamesTxt.split('\n');
-  function newSimpson() {
-    return simpsons[numUsedSimpsons++];
-  }
-  var chosenNames = {};
-  function simpsonName(realName) {
-    if (chosenNames[realName])
-      return chosenNames[realName];
-    var result;
-    if (realName.includes('#')) {
-      var [displayName, comment] = realName.split('#');
-      if (displayName=='?') return realName;
-      result = newSimpson() + '#' + comment;
-    } else {
-      result = newSimpson();
-    }
-    chosenNames[realName] = result;
-    return result;
-  }
-  let lorem = function(tok) {
-    if (tok.startsWith('http'))
-      return 'http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters';
-    else
-      return 'blah';
-  };
-  for (var [name, data] of Object.entries(entries)) {
-    console.log(name.split(' + ').map(simpsonName).join(' + '));
-    for (var d of data) {
-      if (d.startsWith('c:')) {
-        var n = d.substring(3).split(', ');
-        console.log(' c: ' + n.map(simpsonName).join(', '));
-      } else if (d.startsWith('p:')) {
-        // simpsons photos are 1.png to 299.png
-        console.log(' p: ' + 'simpsons/' + (
-          1+Math.floor(298*Math.random())) + '.png');
-      } else if (d.startsWith('n:')) {
-        console.log(' n: ' + d.substring(3).split(' ').map(lorem).join(' '));
-      }
-      else
-        console.log(' ' + d);
-    }
-  }
 }
 
 function imageLoadNotify() {
