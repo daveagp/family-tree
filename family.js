@@ -1,5 +1,4 @@
 /* -*- mode: javascript; js-indent-level: 2 -*- */
-// @flow
 'use strict';
 
 // Override these settings:
@@ -22,7 +21,7 @@ var imageTracker = {
   numCreated: 0,
   numDone: 0,
   allCreated: false};
-var missingCount = 0; // to replace ? by unique identifiers
+var missingCount = 0; // Replace ? by unique identifiers. TODO: move to parsing.
 function newMissingLabel() {
   missingCount += 1;
   return '?#' + missingCount;
@@ -245,28 +244,34 @@ function mergedLayout(left, right, divs, moveRight=true, tryUnder=false) {
 }
 
 // returns a Layout including both name and pred, with name at (0, 0)
-// if name/pred is horizontal, pred can be moved further outside bbox
-function dumbLayout(name, pred, neighbours, divs, allowUp, downsRemaining, isDescendant) {
-  if (includeAll)
-    allowUp = true; // include parents of people marrying into family
+function dumbLayout(name, pred, neighbours, divs,
+                    path = {allowUp: true, downsLeft: downLimit, desc: true}) {
+  if (includeAll) {
+    path.allowUp = true; // include parents of people marrying into family
+    path.downsLeft = 1;
+  }
   var result, leftLayout, rightLayout;
   if (isPerson(name)) {
     var leftUnion = getLeftUnion(name, neighbours);
     var rightUnion = getRightUnion(name, neighbours);
     var aboveUnion = getAboveUnion(name, neighbours);
-    if (!allowUp && aboveUnion != pred) {
+    if (!path.allowUp && aboveUnion != pred) {
       aboveUnion = null;
     }
-    let doLayout = function(union, nameLocation, xshift, desc, allowUpRecursively) {
+    let doLayout = function(union, nameLocation, xshift, newPath) {
       if (union === null) return null;
       if (union == pred) result = {[union]: {x: 0, y: 0}, [name]: nameLocation};
-      else result = dumbLayout(union, name, neighbours, divs, allowUpRecursively, downsRemaining, desc);
+      else result = dumbLayout(union, name, neighbours, divs,
+                               Object.assign({}, path, newPath));
       shift(result, {x: xshift, y: 0});
       return result;
     };
-    var aboveLayout = doLayout(aboveUnion, {x:0, y:1}, 0, false, true);
-    leftLayout = doLayout(leftUnion, {x:xRadius(name, divs), y:0}, -xRadius(name, divs), isDescendant, false);
-    rightLayout = doLayout(rightUnion, {x:-xRadius(name, divs), y:0}, xRadius(name, divs), isDescendant, false);
+    var aboveLayout = doLayout(aboveUnion, {x:0, y:1}, 0, {desc: false});
+    let r = xRadius(name, divs);
+    leftLayout = doLayout(leftUnion, {x:r, y:0}, -xRadius(name, divs),
+                          {allowUp: false});
+    rightLayout = doLayout(rightUnion, {x:-r, y:0}, xRadius(name, divs),
+                           {allowUp: false});
     if (aboveLayout !== null) {
       shift(aboveLayout, aboveLayout[name], -1);
       result = aboveLayout;
@@ -275,20 +280,23 @@ function dumbLayout(name, pred, neighbours, divs, allowUp, downsRemaining, isDes
   } else {  // name is a union
     // note, all 3 people are non-null
     var [leftParent, rightParent] = name.split(' + ');
-    var children = (!isDescendant && downsRemaining === 0) ? [] : getChildren(name, neighbours);
-    if (!isDescendant && downsRemaining === 0 && getChildren(name, neighbours).includes(pred)) {
-      // In ancestors-only mode, need an override to show one child of all ancestor unions.
+    var children = (!path.desc && path.downsLeft === 0)
+        ? [] : getChildren(name, neighbours);
+    if (!path.desc && path.downsLeft === 0
+        && getChildren(name, neighbours).includes(pred)) {
+      // In ancestors-only mode, override to show one child of ancestor unions.
       children = [pred];
     }
-    let doLayout = function(person, nameLocation) {
+    let doLayout = function(person, nameLocation, newPath) {
       if (person == pred) return {[person]: {x:0, y:0}, [name]: nameLocation};
-      else return dumbLayout(person, name, neighbours, divs, allowUp, downsRemaining, isDescendant);
+      else return dumbLayout(person, name, neighbours, divs,
+                             Object.assign({}, path, newPath));
     };
     leftLayout = doLayout(leftParent, {x:xRadius(leftParent, divs), y:0});
     rightLayout = doLayout(rightParent, {x:-xRadius(rightParent, divs), y:0});
-    allowUp = false;
-    downsRemaining -= 1;
-    var childLayouts = children.map(child => doLayout(child, {x:0, y:-1}));
+    var childLayouts = children.map(
+      child => doLayout(child, {x:0, y:-1},
+                        {allowUp: false, downsLeft: path.downsLeft-1}));
     if (childLayouts.length > 0) {
       // remove union and concatenate layouts, shift down, add union back
       for (var layout of childLayouts) delete layout[name];
@@ -353,7 +361,7 @@ function adjustUnions(neighbours, layout, divs) {
 }
 
 function computeLayout(neighbours, divs) {
-  var layout = dumbLayout(rootName, null, neighbours, divs, true, includeAll ? -1 : downLimit, true);
+  var layout = dumbLayout(rootName, null, neighbours, divs);
   shift(layout, boundingBox(layout, divs).bottomLeft, -1);
   // Don't go into corner.
   shift(layout, {x:0, y:1});
@@ -502,10 +510,6 @@ function makeDivs(entries, neighbours) {
 
 function placeDiv(div, x, y) {
   showDiv(div);
-  div.style.left = "200px";
-  div.style.top = "200px";
-  div.style.top = (y - div.offsetHeight/2)+'px';
-  div.style.left = (x - div.offsetWidth/2)+'px';
   div.style.top = (y - div.offsetHeight/2)+'px';
   div.style.left = (x - div.offsetWidth/2)+'px';
 }
@@ -599,20 +603,20 @@ function scrollToElement(element) {
         + element.offsetWidth / 2;
   const x = elementMiddleX - (window.innerWidth / 2);
   window.scrollTo(x,
-                  y
-                  - document.getElementById('control-panel').offsetHeight/2);
+                  y - document.getElementById('control-panel').offsetHeight/2);
   element.focus();
 }
 
-function traverse(name, pred, neighbours, divs, layout, mode, isAncestor, isDescendant, isBlood) {
+function traverse(name, pred, neighbours, divs, layout, mode,
+                  flags = {ancestor: true, descendant: true, blood: true}) {
   var posClass;
   if (pred === null) {
     posClass = "pos-root";
-  } else if (isAncestor) {
+  } else if (flags.ancestor) {
     posClass = "pos-ancestor";
-  } else if (isDescendant) {
+  } else if (flags.descendant) {
     posClass = "pos-descendant";
-  } else if (isBlood) {
+  } else if (flags.blood) {
     posClass = "pos-blood";
   } else {
     posClass = "pos-other";
@@ -627,42 +631,37 @@ function traverse(name, pred, neighbours, divs, layout, mode, isAncestor, isDesc
       connect(name, pred, layout, neighbours, divs, posClass);
     }
   }
-  function recur(newName, isAncestor, isDescendant, isBlood) {
-    if (newName == pred) return;
-    traverse(newName, name, neighbours, divs, layout, mode, isAncestor, isDescendant, isBlood);
+  function recur(newName, newFlags) {
+    if (newName == null || newName == pred) return;
+    traverse(newName, name, neighbours, divs, layout, mode,
+             Object.assign({}, flags, newFlags));
   }
   if (isPerson(name)) {
     if (mode=="setPeopleClasses") {
       divs[name].classList.add(posClass);
     }
     var leftUnion = getLeftUnion(name, neighbours);
-    if (leftUnion)
-      recur(leftUnion, false, isDescendant, isBlood || isAncestor);
+    recur(leftUnion, {ancestor: false, blood: flags.ancestor || flags.blood});
     var rightUnion = getRightUnion(name, neighbours);
-    if (rightUnion)
-      recur(rightUnion, false, isDescendant, isBlood || isAncestor);
+    recur(rightUnion, {ancestor: false, blood: flags.ancestor || flags.blood});
     var aboveUnion = getAboveUnion(name, neighbours);
-    if (aboveUnion) {
-      recur(aboveUnion, isAncestor, false, false);
-    }
+    recur(aboveUnion, {blood: false, descendant: false});
   } else {
     var [p1, p2] = name.split(' + ');
-    recur(p1, isAncestor, false, false);
-    recur(p2, isAncestor, false, false);
+    recur(p1, {blood: false, descendant: false});
+    recur(p2, {blood: false, descendant: false});
     for (var child of getChildren(name, neighbours)) {
-      recur(child, false, isDescendant, isBlood || isAncestor);
+      recur(child, {ancestor: false, blood: flags.ancestor || flags.blood});
     }
   }
 }
 
 function setPeopleClasses(rootName, neighbours, divs) {
-  traverse(rootName, null, neighbours, divs, null,
-           "setPeopleClasses", true, true, true);
+  traverse(rootName, null, neighbours, divs, null, "setPeopleClasses");
 }
 
 function drawConnections(rootName, neighbours, divs, layout) {
-  traverse(rootName, null, neighbours, divs, layout,
-           "drawConnections", true, true, true);
+  traverse(rootName, null, neighbours, divs, layout, "drawConnections");
 }
 
 function drawTree(divs, neighbours) {
@@ -683,6 +682,9 @@ function drawTree(divs, neighbours) {
         placeDiv(divs[name], layout[name].x, layout[name].y);
       } else {
         hideDiv(divs[name]);
+        // Stuck divs would make window always stay giant.
+        divs[name].style.top = '100px';
+        divs[name].style.left = '100px';
       }
     }
   }
