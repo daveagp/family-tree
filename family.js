@@ -28,11 +28,18 @@ function newMissingLabel() {
   return '?#' + missingCount;
 }
 
-// Reads family_txt Name -> list of sublines e.g. ['c: blah', 'n: blah']
-function readInput(text) {
-  // Read input minus comments
-  var lines = text.split('\n');
+// Basic parsing functions taking a string as input
+function isPerson(name) {
+  return !name.includes(' + ');
+}
+function isUnion(name) {
+  return name.includes(' + ');
+}
 
+// Input: text from familyDataFilename
+// Output: "entries" = map<name of person or union, list of data rows for them>
+function getEntries(text) {
+  var lines = text.split('\n');
   var result = {};
   var i = 0;
   // skip line if comment or blank. return true iff it was a comment or blank.
@@ -84,22 +91,20 @@ function readInput(text) {
   return result;
 }
 
-function isPerson(name) {
-  return name.indexOf(' + ') < 0;
-}
+// Rewrite as undirected bipartite graph on people and unions
+// Output: map<person or union name, list<adjacent union or person names>>
+function getNeighbours(entries) {
+  var result = {};
+  // Ensure singleton nodes are included:
+  for (let name of Object.keys(entries)) result[name] = [];
 
-function isUnion(name) {
-  return name.indexOf(' + ') >= 0;
-}
-
-// Rewrite as undirected graph on people and unions
-function getEdges(entries) {
-  var result = [];
-  for (var [name, props] of Object.entries(entries)) {
+  function addHalfEdge(x, y) {
+    if (!result.hasOwnProperty(x)) result[x] = [];
+    result[x].push(y);
+  }
+  for (let [name, props] of Object.entries(entries)) {
     if (isPerson(name)) continue;
     var [p1, p2] = name.split(' + ');
-    if (p1=='?') p1 = newMissingLabel();
-    if (p2=='?') p2 = newMissingLabel();
     var newName = p1 + ' + ' + p2;
     var children = [];
     for (var prop of props) {
@@ -111,24 +116,16 @@ function getEdges(entries) {
         children[i] = newMissingLabel();
       }
     }
-    for (var x of children.concat([p1, p2]))
-      result.push([newName, x]);
+    for (var x of children.concat([p1, p2])) {
+      addHalfEdge(newName, x);
+      addHalfEdge(x, newName);
+    }
   }
   return result;
 }
 
-// returns map from person/union -> list of person/unions
-function getNeighbours(edges) {
-  var result = {};
-  for (var [u, v] of edges) {
-    if (!result.hasOwnProperty(u)) result[u] = [];
-    if (!result.hasOwnProperty(v)) result[v] = [];
-    result[u].push(v);
-    result[v].push(u);
-  }
-  return result;
-}
-
+// Get union where this person was one of the two parents, or null if none.
+// 0: left side, 1: right side
 function getUnion(person, neighbours, side) {
   var result = [];
   for (let name of neighbours[person]) {
@@ -150,7 +147,7 @@ function getRightUnion(person, neighbours) {
 
 function getAboveUnion(person, neighbours) {
   for (let name of neighbours[person]) {
-    if ((name.split(' + ').indexOf(person)) == -1)
+    if (!name.split(' + ').includes(person))
       return name;
   }
   return null;
@@ -159,12 +156,15 @@ function getAboveUnion(person, neighbours) {
 function getChildren(union, neighbours) {
   if (union===null) return [];
   return neighbours[union].filter(
-    name => union.split(' + ').indexOf(name) == -1);
+    name => !union.split(' + ').includes(name));
 }
 
-// updates layout in-place
+// A layout is a map <person or union name, {x:..., y:...}>
+// Here x is in pixels and y is in "generations" (lineHeight high each)
+
+// Update layout in-place
 function shift(layout, delta, sign=1) {
-  var [dx, dy] = [delta.x, delta.y]; // avoid aliasing
+  var [dx, dy] = [delta.x, delta.y]; // avoid aliasing if delta is from layout
   function move(point) {
     point.x += sign*dx;
     point.y += sign*dy;
@@ -172,18 +172,22 @@ function shift(layout, delta, sign=1) {
   for (var pt of Object.values(layout)) move(pt);
 }
 
-function ingest(consumer, food) {
-  for (var [name, pt] of Object.entries(food))
-    consumer[name] = pt;
+// Use "visibility" instead of "display" b/c sizes still exist
+function showDiv(div) {
+  div.style.visibility = "";
 }
 
+function hideDiv(div) {
+  div.style.visibility = "hidden";
+}
+
+// How much space is needed from the center of this person/union to either side?
 function xRadius(name, divs) {
   if (isUnion(name)) return 0;
-  divs[name].style.display = "";
   return paddingAmount + divs[name].offsetWidth/2;
 }
 
-// y -> [min x, max x]
+// Returns map <y, [min x, max x]>
 function rowRanges(layout, divs) {
   var result = {};
   for (var [name, pt] of Object.entries(layout)) {
@@ -198,6 +202,7 @@ function rowRanges(layout, divs) {
   return result;
 }
 
+// Do Layouts left and right collide?
 function collides(left, right, divs) {
   var layers = {};
   for (var [name, pt] of
@@ -206,8 +211,7 @@ function collides(left, right, divs) {
       layers[pt.y] = [];
     layers[pt.y].push([
       pt.x - xRadius(name, divs),
-      pt.x + xRadius(name, divs),
-      name]);
+      pt.x + xRadius(name, divs)]);
   }
   for (var [_, intervals] of Object.entries(layers)) {
     var sorted = intervals.sort(
@@ -219,10 +223,11 @@ function collides(left, right, divs) {
   return false;
 }
 
+// If tryUnder, we'll try both layouts as-is.
+// Otherwise move left or right layout to fit side-by-side.
 function mergedLayout(left, right, divs, moveRight=true, tryUnder=false) {
   if (tryUnder && !collides(left, right, divs)) {
-    ingest(left, right);
-    return left;
+    return Object.assign(left, right);
   }
   var lbounds = rowRanges(left, divs);
   var rbounds = rowRanges(right, divs);
@@ -236,8 +241,7 @@ function mergedLayout(left, right, divs, moveRight=true, tryUnder=false) {
   if (shiftage===null) throw "merge without common y";
   if (moveRight) shift(right, {x: shiftage, y: 0});
   else shift(left, {x: -shiftage, y: 0});
-  ingest(left, right);
-  return left;
+  return Object.assign(left, right);
 }
 
 // returns a Layout including both name and pred, with name at (0, 0)
@@ -272,7 +276,7 @@ function dumbLayout(name, pred, neighbours, divs, allowUp, downsRemaining, isDes
     // note, all 3 people are non-null
     var [leftParent, rightParent] = name.split(' + ');
     var children = (!isDescendant && downsRemaining === 0) ? [] : getChildren(name, neighbours);
-    if (!isDescendant && downsRemaining === 0 && getChildren(name, neighbours).indexOf(pred) != -1) {
+    if (!isDescendant && downsRemaining === 0 && getChildren(name, neighbours).includes(pred)) {
       // In ancestors-only mode, need an override to show one child of all ancestor unions.
       children = [pred];
     }
@@ -341,14 +345,14 @@ function adjustUnions(neighbours, layout, divs) {
         childTop, layout[child].y - divs[child].offsetHeight/2);
     }
     if (childTop < parentBottom) {
-      throw "Union " + node
-        + " overlapped above/below. Try increasing lineHeight";
+      errorOut("Union " + node
+               + " overlapped above/below. Try increasing lineHeight");
     }
     layout[node].y = (parentBottom + childTop) / 2;
   }
 }
 
-function computeLayout(edges, neighbours, divs) {
+function computeLayout(neighbours, divs) {
   var layout = dumbLayout(rootName, null, neighbours, divs, true, includeAll ? -1 : downLimit, true);
   shift(layout, boundingBox(layout, divs).bottomLeft, -1);
   // Don't go into corner.
@@ -469,28 +473,27 @@ function makeDiv(name, entries, neighbours) {
     }
     if (info.length !== 0) {
       details.appendChild(makeInfoDiv());
-      document.getElementById('info-pane').style.display = 'block';
-      document.getElementById('info-pane-placeholder')
-        .style.display = 'none';
+      showDiv(document.getElementById('info-pane'));
+      hideDiv(document.getElementById('info-pane-placeholder'));
     } else {
-      document.getElementById('info-pane').style.display = 'none';
-      document.getElementById('info-pane-placeholder')
-        .style.display = 'block';
+      hideDiv(document.getElementById('info-pane'));
+      showDiv(document.getElementById('info-pane-placeholder'));
     }
   };
   // For some reason size changes if not on-screen.
   document.body.appendChild(result);
   result.style.top = "200px";
   result.style.left = "200px";
+  hideDiv(result);
   return result;
 }
 
 // name -> div
-function makeDivs(edges, entries, neighbours) {
+function makeDivs(entries, neighbours) {
   var result = {};
-  for (var [_, person] of edges) {
-    if (!result.hasOwnProperty(person)) {
-      result[person] = makeDiv(person, entries, neighbours);
+  for (var name of Object.keys(neighbours)) {
+    if (isPerson(name)) {
+      result[name] = makeDiv(name, entries, neighbours);
     }
   }
   imageTracker.allCreated = true;
@@ -498,7 +501,7 @@ function makeDivs(edges, entries, neighbours) {
 }
 
 function placeDiv(div, x, y) {
-  div.style.visibility = "";
+  showDiv(div);
   div.style.left = "200px";
   div.style.top = "200px";
   div.style.top = (y - div.offsetHeight/2)+'px';
@@ -506,11 +509,6 @@ function placeDiv(div, x, y) {
   div.style.top = (y - div.offsetHeight/2)+'px';
   div.style.left = (x - div.offsetWidth/2)+'px';
 }
-
-function hideDiv(div) {
-  div.style.display = "none";
-}
-
 
 // https://stackoverflow.com/questions/4270485/drawing-lines-on-html-page
 function createLine(x1, y1, x2, y2, lineClass) {
@@ -562,7 +560,7 @@ function hasRenderedChildren(union, neighbours, layout) {
 
 function connect(node1, node2, layout, neighbours, divs, lineClass) {
   var [person, union] = isPerson(node1) ? [node1, node2] : [node2, node1];
-  if (union.split(' + ').indexOf(person) > -1) {
+  if (union.split(' + ').includes(person)) {
     // Connect person with union to a partner
     if (hasRenderedChildren(union, neighbours, layout)) {
       // Line from bottom of person
@@ -667,33 +665,29 @@ function drawConnections(rootName, neighbours, divs, layout) {
            "drawConnections", true, true, true);
 }
 
-function drawTree(entries, edges, divs, neighbours) {
+function drawTree(divs, neighbours) {
   if (!divs[rootName])
     throw "Selected name not found in data: " + rootName;
   // Since classes affect div size, do it before layout.
   setPeopleClasses(rootName, neighbours, divs);
-  var layout = computeLayout(edges, neighbours, divs);
+  var layout = computeLayout(neighbours, divs);
   var box = boundingBox(layout, divs);
   shift(layout, {x:0,
                  y:0.5*lineHeight
                  - box.bottomLeft.y
                  + document.getElementById('control-panel').offsetHeight});
   drawConnections(rootName, neighbours, divs, layout);
-  for (var [_, v] of edges) {
-    // v is a person
-    if (layout.hasOwnProperty(v)) {
-      placeDiv(divs[v], layout[v].x, layout[v].y);
-    } else {
-      hideDiv(divs[v]);
+  for (let name of Object.keys(neighbours)) {
+    if (isPerson(name)) {
+      if (layout.hasOwnProperty(name)) {
+        placeDiv(divs[name], layout[name].x, layout[name].y);
+      } else {
+        hideDiv(divs[name]);
+      }
     }
   }
   scrollToElement(divs[rootName]);
-  document.getElementById('root-name').innerText
-    = rootName.replace(/#.*$/g, '');
-  document.getElementById('detail-picker').value
-    = includeAll ? "Everyone" : downLimit;
   updateTreeInformation(layout, divs);
-  window.state = {entries, edges, divs, neighbours, layout, box};
 }
 
 function updateTreeInformation(layout, divs) {
@@ -729,7 +723,7 @@ function updateTreeInformation(layout, divs) {
   infodiv.innerHTML = result;
 }
 
-function updateDetail() {
+function setVarsFromDetailOption() {
   var choice = document.getElementById('detail-picker').value;
   if (choice == 'Everyone') {
     includeAll = true;
@@ -738,11 +732,15 @@ function updateDetail() {
     includeAll = false;
     downLimit = Number(choice);
   }
+}
+
+function updateDetail() {
+  setVarsFromDetailOption();
   redraw();
   document.activeElement.blur();
 }
 
-function validateTreeStructure(entries, edges, neighbours) {
+function validateTreeStructure(neighbours) {
   var parent = {};  // null parent means visited, root of its component.
   function buildConnectedComponent(curr, prev, component) {
     if (parent.hasOwnProperty(curr)) {
@@ -766,7 +764,7 @@ function validateTreeStructure(entries, edges, neighbours) {
   }
 
   var components = [];
-  for (let name of Object.keys(entries)) {
+  for (let name of Object.keys(neighbours)) {
     if (!neighbours.hasOwnProperty(name)) {
       throw "Singleton node or malformatted line: " + name;
     }
@@ -814,14 +812,15 @@ window.onload = function() {
 };
 
 function processFamilyTxt(family_txt) {
-  var entries = readInput(family_txt);
-  var edges = getEdges(entries);
-  var neighbours = getNeighbours(edges);
-  validateTreeStructure(entries, edges, neighbours);
-  var divs = makeDivs(edges, entries, neighbours);
+  var entries = getEntries(family_txt);
+  var neighbours = getNeighbours(entries);
+  validateTreeStructure(neighbours);
+  var divs = makeDivs(entries, neighbours);
+  // Need to save divs and neighbours, also keep entries for debugging.
+  window.state = {entries, divs, neighbours};
+
   readHash();
-  drawTree(entries, edges, divs, neighbours);
-  window.state = {entries, edges, divs, neighbours};
+  drawTree(divs, neighbours);
   window.onpopstate = function() {
     readHash();
     redraw();
@@ -845,13 +844,13 @@ function redraw() {
       el.classList.remove("pos-"+kind);
     }
   }
-  drawTree(window.state.entries, window.state.edges, window.state.divs, window.state.neighbours);
+  drawTree(window.state.divs, window.state.neighbours);
   updateHash();
 }
 
 function changeRoot(person) {
   rootName = person;
-  document.title = person + "'s Family Tree";
+  showRootName();
   redraw();
 }
 
@@ -860,11 +859,17 @@ function updateHash() {
     + ':' + document.getElementById('detail-picker').value;
 }
 
+function showRootName() {
+  document.title = displayName(rootName) + "'s Family Tree";
+  document.getElementById('root-name').innerText = displayName(rootName);
+}
+
 function readHash() {
   if (window.location.hash.startsWith('#')) {
     var [name, detail] = window.location.hash.substr(1).split(':');
     rootName = decodeURIComponent(name);
     document.getElementById('detail-picker').value = detail;
   }
-  document.title = rootName + "'s Family Tree";
+  setVarsFromDetailOption();
+  showRootName();
 }
