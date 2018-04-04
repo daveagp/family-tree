@@ -172,12 +172,20 @@ function shift(layout, delta, sign=1) {
 }
 
 // Use "visibility" instead of "display" b/c sizes still exist
-function showDiv(div) {
-  div.style.visibility = "";
+function showDiv(div, displayMode=false) {
+  if (displayMode) {
+    div.style.display = "block";
+  } else {
+    div.style.visibility = "";
+  }
 }
 
-function hideDiv(div) {
-  div.style.visibility = "hidden";
+function hideDiv(div, displayMode=false) {
+  if (displayMode) {
+    div.style.display = "none";
+  } else {
+    div.style.visibility = "hidden";
+  }
 }
 
 // How much space is needed from the center of this person/union to either side?
@@ -481,11 +489,11 @@ function makeDiv(name, entries, neighbours) {
     }
     if (info.length !== 0) {
       details.appendChild(makeInfoDiv());
-      showDiv(document.getElementById('info-pane'));
-      hideDiv(document.getElementById('info-pane-placeholder'));
+      showDiv(document.getElementById('info-pane'), true);
+      hideDiv(document.getElementById('info-pane-placeholder'), true);
     } else {
-      hideDiv(document.getElementById('info-pane'));
-      showDiv(document.getElementById('info-pane-placeholder'));
+      hideDiv(document.getElementById('info-pane'), true);
+      showDiv(document.getElementById('info-pane-placeholder'), true);
     }
   };
   // For some reason size changes if not on-screen.
