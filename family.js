@@ -299,18 +299,19 @@ function getVisibleNodes(
 // returns a Layout including name, pred, and nothing beyond pred from name
 // name will be at (0, 0)
 function dumbLayout(name, pred, neighbours, divs, visibleNodes) {
+  let doLayout = function(next, nameLocation, xshift=0) {
+    if (next === null || !visibleNodes.has(next)) return null;
+    if (next == pred) result = {[next]: {x: 0, y: 0}, [name]: nameLocation};
+    else result = dumbLayout(next, name, neighbours, divs, visibleNodes);
+    shift(result, {x: xshift, y: 0});
+    return result;
+  };
+
   var result, leftLayout, rightLayout;
   if (isPerson(name)) {
     let leftUnion = getLeftUnion(name, neighbours);
     let rightUnion = getRightUnion(name, neighbours);
     let aboveUnion = getAboveUnion(name, neighbours);
-    let doLayout = function(union, nameLocation, xshift) {
-      if (union === null || !visibleNodes.has(union)) return null;
-      if (union == pred) result = {[union]: {x: 0, y: 0}, [name]: nameLocation};
-      else result = dumbLayout(union, name, neighbours, divs, visibleNodes);
-      shift(result, {x: xshift, y: 0});
-      return result;
-    };
     let aboveLayout = doLayout(aboveUnion, {x:0, y:1}, 0);
     let r = xRadius(name, divs);
     leftLayout = doLayout(leftUnion, {x:r, y:0}, -xRadius(name, divs));
@@ -325,11 +326,6 @@ function dumbLayout(name, pred, neighbours, divs, visibleNodes) {
     let [leftParent, rightParent] = name.split(' + ');
     let children = getChildren(name, neighbours)
         .filter(x => visibleNodes.has(x));
-    let doLayout = function(person, nameLocation) {
-      if (person == pred)
-        return {[person]: {x:0, y:0}, [name]: nameLocation};
-      else return dumbLayout(person, name, neighbours, divs, visibleNodes);
-    };
     leftLayout = doLayout(leftParent, {x:xRadius(leftParent, divs), y:0});
     rightLayout = doLayout(rightParent, {x:-xRadius(rightParent, divs), y:0});
     let childLayouts = children.map(child => doLayout(child, {x:0, y:-1}));
