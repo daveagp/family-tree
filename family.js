@@ -296,7 +296,8 @@ function getVisibleNodes(
   }
 }
 
-// returns a Layout including both name and pred, with name at (0, 0)
+// returns a Layout including name, pred, and nothing beyond pred from name
+// name will be at (0, 0)
 function dumbLayout(name, pred, neighbours, divs, visibleNodes) {
   var result, leftLayout, rightLayout;
   if (isPerson(name)) {
