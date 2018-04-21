@@ -252,60 +252,86 @@ function mergedLayout(left, right, divs, moveRight=true, tryUnder=false) {
   return Object.assign(left, right);
 }
 
-// returns a Layout including both name and pred, with name at (0, 0)
-function dumbLayout(name, pred, neighbours, divs,
-                    path = {allowUp: true, downsLeft: downLimit, desc: true}) {
-  if (includeAll) {
-    path.allowUp = true; // include parents of people marrying into family
-    path.downsLeft = 1;
+Set.prototype.union = function(setB) {
+  var union = new Set(this);
+  for (var elem of setB) {
+    union.add(elem);
   }
+  return union;
+}
+
+// returns a Set of all nodes that should be rendered
+function getVisibleNodes(
+  name, pred, neighbours,
+  path = {allowUp: true, downsLeft: downLimit, desc: true}) {
+  if (includeAll) {
+    return new Set(Object.keys(neighbours));
+  }
+  let getNodes = function(newName, newPath) {
+    if (newName === null || newName == pred) return new Set([]);
+    return getVisibleNodes(newName, name, neighbours,
+                           Object.assign({}, path, newPath));
+  };
+  if (isPerson(name)) {
+    let leftUnion = getLeftUnion(name, neighbours);
+    let rightUnion = getRightUnion(name, neighbours);
+    let aboveUnion = path.allowUp ? getAboveUnion(name, neighbours) : null;
+    return new Set([name]).
+      union(getNodes(aboveUnion, {desc: false})).
+      union(getNodes(leftUnion, {allowUp: false})).
+      union(getNodes(rightUnion, {allowUp: false}));
+  } else {  // name is a union
+    let [leftParent, rightParent] = name.split(' + ');
+    let children = (!path.desc && path.downsLeft === 0)
+        ? [] : getChildren(name, neighbours);
+    let result = new Set([name]).
+        union(getNodes(leftParent, {})).
+        union(getNodes(rightParent, {}));
+    for (let child of children) {
+      result = result.union(getNodes(
+        child,
+        {allowUp: false, downsLeft: path.downsLeft - 1}));
+    }
+    return result;
+  }
+}
+
+// returns a Layout including both name and pred, with name at (0, 0)
+function dumbLayout(name, pred, neighbours, divs, visibleNodes) {
   var result, leftLayout, rightLayout;
   if (isPerson(name)) {
-    var leftUnion = getLeftUnion(name, neighbours);
-    var rightUnion = getRightUnion(name, neighbours);
-    var aboveUnion = getAboveUnion(name, neighbours);
-    if (!path.allowUp && aboveUnion != pred) {
-      aboveUnion = null;
-    }
-    let doLayout = function(union, nameLocation, xshift, newPath) {
-      if (union === null) return null;
+    let leftUnion = getLeftUnion(name, neighbours);
+    let rightUnion = getRightUnion(name, neighbours);
+    let aboveUnion = getAboveUnion(name, neighbours);
+    let doLayout = function(union, nameLocation, xshift) {
+      if (union === null || !visibleNodes.has(union)) return null;
       if (union == pred) result = {[union]: {x: 0, y: 0}, [name]: nameLocation};
-      else result = dumbLayout(union, name, neighbours, divs,
-                               Object.assign({}, path, newPath));
+      else result = dumbLayout(union, name, neighbours, divs, visibleNodes);
       shift(result, {x: xshift, y: 0});
       return result;
     };
-    var aboveLayout = doLayout(aboveUnion, {x:0, y:1}, 0, {desc: false});
+    let aboveLayout = doLayout(aboveUnion, {x:0, y:1}, 0);
     let r = xRadius(name, divs);
-    leftLayout = doLayout(leftUnion, {x:r, y:0}, -xRadius(name, divs),
-                          {allowUp: false});
-    rightLayout = doLayout(rightUnion, {x:-r, y:0}, xRadius(name, divs),
-                           {allowUp: false});
+    leftLayout = doLayout(leftUnion, {x:r, y:0}, -xRadius(name, divs));
+    rightLayout = doLayout(rightUnion, {x:-r, y:0}, xRadius(name, divs));
     if (aboveLayout !== null) {
       shift(aboveLayout, aboveLayout[name], -1);
       result = aboveLayout;
     }
     else result = {[name]: {x:0, y:0}};
   } else {  // name is a union
-    // note, all 3 people are non-null
-    var [leftParent, rightParent] = name.split(' + ');
-    var children = (!path.desc && path.downsLeft === 0)
-        ? [] : getChildren(name, neighbours);
-    if (!path.desc && path.downsLeft === 0
-        && getChildren(name, neighbours).includes(pred)) {
-      // In ancestors-only mode, override to show one child of ancestor unions.
-      children = [pred];
-    }
-    let doLayout = function(person, nameLocation, newPath) {
-      if (person == pred) return {[person]: {x:0, y:0}, [name]: nameLocation};
-      else return dumbLayout(person, name, neighbours, divs,
-                             Object.assign({}, path, newPath));
+    // If union is visible, so are the members of it, but maybe not all children
+    let [leftParent, rightParent] = name.split(' + ');
+    let children = getChildren(name, neighbours)
+        .filter(x => visibleNodes.has(x));
+    let doLayout = function(person, nameLocation) {
+      if (person == pred)
+        return {[person]: {x:0, y:0}, [name]: nameLocation};
+      else return dumbLayout(person, name, neighbours, divs, visibleNodes);
     };
     leftLayout = doLayout(leftParent, {x:xRadius(leftParent, divs), y:0});
     rightLayout = doLayout(rightParent, {x:-xRadius(rightParent, divs), y:0});
-    var childLayouts = children.map(
-      child => doLayout(child, {x:0, y:-1},
-                        {allowUp: false, downsLeft: path.downsLeft-1}));
+    let childLayouts = children.map(child => doLayout(child, {x:0, y:-1}));
     if (childLayouts.length > 0) {
       // remove union and concatenate layouts, shift down, add union back
       for (var layout of childLayouts) delete layout[name];
@@ -370,7 +396,8 @@ function adjustUnions(neighbours, layout, divs) {
 }
 
 function computeLayout(neighbours, divs) {
-  var layout = dumbLayout(rootName, null, neighbours, divs);
+  var visibleNodes = getVisibleNodes(rootName, null, neighbours);
+  var layout = dumbLayout(rootName, null, neighbours, divs, visibleNodes);
   shift(layout, boundingBox(layout, divs).bottomLeft, -1);
   // Don't go into corner.
   shift(layout, {x:0, y:1});
