@@ -19,7 +19,7 @@ Maggie Simpson
  n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
  n: blah blah blah blah blah blah http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters
 Ned Flanders + Charles Montgomery Burns
- c: Krusty the Clown, Moe Szyslak
+ c: Krusty the Clown, Moe Szyslak, ?, ?
  n: blah blah blah blah blah blah blah blah
 Moe Szyslak
  n: http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters

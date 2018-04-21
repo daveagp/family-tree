@@ -21,11 +21,6 @@ var imageTracker = {
   numCreated: 0,
   numDone: 0,
   allCreated: false};
-var missingCount = 0; // Replace ? by unique identifiers. TODO: move to parsing.
-function newMissingLabel() {
-  missingCount += 1;
-  return '?#' + missingCount;
-}
 
 // Basic parsing functions taking a string as input
 function isPerson(name) {
@@ -41,6 +36,13 @@ function getEntries(text) {
   var lines = text.split('\n');
   var result = {};
   var i = 0;
+
+  var missingCount = 0; // To replace ? by unique identifiers.
+  function newMissingLabel() {
+    missingCount += 1;
+    return '?#' + missingCount;
+  }
+
   // skip line if comment or blank. return true iff it was a comment or blank.
   function trySkipComment() {
     if (i >= lines.length
@@ -82,6 +84,10 @@ function getEntries(text) {
           || isUnion(key) && !["n", "c"].includes(trimmedLine[0])) {
         throw "Misformatted line under " + key + ": " + trimmedLine;
       }
+      if (trimmedLine.substr(0, 3) == "c: ") {
+        trimmedLine = "c: " + trimmedLine.substr(3).split(", ").map(
+          str => str != "?" ? str : newMissingLabel()).join(", ");
+      }
       value.push(trimmedLine);
       i += 1;
     }
@@ -109,11 +115,6 @@ function getNeighbours(entries) {
     for (var prop of props) {
       if (prop.startsWith('c: '))
         children = prop.substring(3).split(', ');
-    }
-    for (var i=0; i<children.length; i++) {
-      if (children[i]=="?") {
-        children[i] = newMissingLabel();
-      }
     }
     for (var x of children.concat([p1, p2])) {
       addHalfEdge(newName, x);
