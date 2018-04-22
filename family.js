@@ -299,60 +299,60 @@ function getVisibleNodes(
 // returns a Layout including name, pred, and nothing beyond pred from name
 // name will be at (0, 0)
 function dumbLayout(name, pred, neighbours, divs, visibleNodes) {
-  let doLayout = function(next, nameLocation, xshift=0) {
+  // Return recursive layout with name at 0, 0
+  // If next==pred, return doubleton Layout w/ next/pred at defaultLocation
+  // (though side layouts don't need a defaultLocation due to merge shifting)
+  let doLayout = function(next, defaultLocation = {x:0, y:0}) {
     if (next === null || !visibleNodes.has(next)) return null;
-    if (next == pred) result = {[next]: {x: 0, y: 0}, [name]: nameLocation};
-    else result = dumbLayout(next, name, neighbours, divs, visibleNodes);
-    shift(result, {x: xshift, y: 0});
+    if (next == pred) return {[name]: {x:0, y:0}, [next]: defaultLocation};
+    let result = dumbLayout(next, name, neighbours, divs, visibleNodes);
+    shift(result, result[name], -1);
     return result;
   };
 
-  var result, leftLayout, rightLayout;
+  // Central layout to merge into and its default value. It is the return value.
+  var mainLayout = {[name]: {x:0, y:0}};
+  var leftLayout, rightLayout;  // These are merged into mainLayout.
   if (isPerson(name)) {
     let leftUnion = getLeftUnion(name, neighbours);
     let rightUnion = getRightUnion(name, neighbours);
     let aboveUnion = getAboveUnion(name, neighbours);
-    let aboveLayout = doLayout(aboveUnion, {x:0, y:1}, 0);
-    let r = xRadius(name, divs);
-    leftLayout = doLayout(leftUnion, {x:r, y:0}, -xRadius(name, divs));
-    rightLayout = doLayout(rightUnion, {x:-r, y:0}, xRadius(name, divs));
-    if (aboveLayout !== null) {
-      shift(aboveLayout, aboveLayout[name], -1);
-      result = aboveLayout;
-    }
-    else result = {[name]: {x:0, y:0}};
+    leftLayout = doLayout(leftUnion);
+    rightLayout = doLayout(rightUnion);
+    let aboveLayout = doLayout(aboveUnion, {x:0, y:-1});  // -1 is up
+    if (aboveLayout !== null) mainLayout = aboveLayout;
   } else {  // name is a union
     // If union is visible, so are the members of it, but maybe not all children
     let [leftParent, rightParent] = name.split(' + ');
     let children = getChildren(name, neighbours)
         .filter(x => visibleNodes.has(x));
-    leftLayout = doLayout(leftParent, {x:xRadius(leftParent, divs), y:0});
-    rightLayout = doLayout(rightParent, {x:-xRadius(rightParent, divs), y:0});
-    let childLayouts = children.map(child => doLayout(child, {x:0, y:-1}));
+    leftLayout = doLayout(leftParent);
+    rightLayout = doLayout(rightParent);
+    let childLayouts = children.map(child => doLayout(child, {x:0, y:1}));
     if (childLayouts.length > 0) {
-      // remove union and concatenate layouts, shift down, add union back
-      for (var layout of childLayouts) delete layout[name];
-      result = childLayouts[0];
+      // remove union and concatenate layouts, center, add union back
+      for (var childLayout of childLayouts) delete childLayout[name];
+      mainLayout = childLayouts[0];
       for (var childLayout of childLayouts.slice(1))
-        result = mergedLayout(result, childLayout, divs);
-      var childXs = children.map(child => result[child].x);
+        mainLayout = mergedLayout(mainLayout, childLayout, divs);
+      var childXs = children.map(child => mainLayout[child].x);
       var middle = (Math.min(...childXs) + Math.max(...childXs))/2;
-      shift(result, {x:-middle, y:1});
-      result[name] = {x:0, y:0};
-    } else {
-      result = {[name]: {x:0, y:0}};
+      shift(mainLayout, {x:-middle, y:0});
+      mainLayout[name] = {x:0, y:0};
     }
   }
-  // common to both cases
+  // common to both cases, merge side layouts into center one.
   if (leftLayout !== null) {
     delete leftLayout[name];
-    result = mergedLayout(leftLayout, result, divs, false, isPerson(name));
+    mainLayout =
+      mergedLayout(leftLayout, mainLayout, divs, false, isPerson(name));
   }
   if (rightLayout !== null) {
     delete rightLayout[name];
-    result = mergedLayout(result, rightLayout, divs, true, isPerson(name));
+    mainLayout =
+      mergedLayout(mainLayout, rightLayout, divs, true, isPerson(name));
   }
-  return result;
+  return mainLayout;
 }
 
 function boundingBox(layout, divs) {
