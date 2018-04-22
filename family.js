@@ -42,6 +42,7 @@ function getEntries(text) {
     missingCount += 1;
     return '?#' + missingCount;
   }
+  let correctedLabel = str => str != "?" ? str : newMissingLabel();
 
   // skip line if comment or blank. return true iff it was a comment or blank.
   function trySkipComment() {
@@ -65,8 +66,7 @@ function getEntries(text) {
       throw "Names can't contain commas: " + key;
     if (toks.length == 2) {
       // need to update name of union with ? so it can be referenced later
-      if (toks[0] == '?') toks[0] = newMissingLabel();
-      if (toks[1] == '?') toks[1] = newMissingLabel();
+      toks = toks.map(correctedLabel);
       key = toks[0] + ' + ' + toks[1];
     } else {
       if (result.hasOwnProperty(key))
@@ -85,8 +85,8 @@ function getEntries(text) {
         throw "Misformatted line under " + key + ": " + trimmedLine;
       }
       if (trimmedLine.substr(0, 3) == "c: ") {
-        trimmedLine = "c: " + trimmedLine.substr(3).split(", ").map(
-          str => str != "?" ? str : newMissingLabel()).join(", ");
+        trimmedLine = "c: " + trimmedLine.substr(3).split(", ")
+          .map(correctedLabel).join(", ");
       }
       value.push(trimmedLine);
       i += 1;
@@ -258,7 +258,7 @@ Set.prototype.union = function(setB) {
     union.add(elem);
   }
   return union;
-}
+};
 
 // returns a Set of all nodes that should be rendered
 function getVisibleNodes(
@@ -331,9 +331,9 @@ function dumbLayout(name, pred, neighbours, divs, visibleNodes) {
     let childLayouts = children.map(child => doLayout(child, {x:0, y:1}));
     if (childLayouts.length > 0) {
       // remove union and concatenate layouts, center, add union back
-      for (var childLayout of childLayouts) delete childLayout[name];
+      for (let childLayout of childLayouts) delete childLayout[name];
       mainLayout = childLayouts[0];
-      for (var childLayout of childLayouts.slice(1))
+      for (let childLayout of childLayouts.slice(1))
         mainLayout = mergedLayout(mainLayout, childLayout, divs);
       var childXs = children.map(child => mainLayout[child].x);
       var middle = (Math.min(...childXs) + Math.max(...childXs))/2;
@@ -665,7 +665,7 @@ function traverse(name, pred, neighbours, divs, layout, mode,
     }
   }
   function recur(newName, newFlags) {
-    if (newName == null || newName == pred) return;
+    if (newName === null || newName == pred) return;
     traverse(newName, name, neighbours, divs, layout, mode,
              Object.assign({}, flags, newFlags));
   }
