@@ -37,12 +37,13 @@ function getEntries(text) {
   var result = {};
   var i = 0;
 
-  var missingCount = 0; // To replace ? by unique identifiers.
-  function newMissingLabel() {
-    missingCount += 1;
-    return '?#' + missingCount;
+  var uniqueCounter = 0; // To replace ? by unique identifiers.
+  function makeUnique(str) {
+    uniqueCounter += 1;
+    return str + '#' + uniqueCounter;
   }
-  let correctedLabel = str => str != "?" ? str : newMissingLabel();
+  let correctedLabel = str =>
+      (str == "?" || str == "...") ? makeUnique(str) : str;
 
   // skip line if comment or blank. return true iff it was a comment or blank.
   function trySkipComment() {
@@ -85,8 +86,12 @@ function getEntries(text) {
         throw "Misformatted line under " + key + ": " + trimmedLine;
       }
       if (trimmedLine.substr(0, 3) == "c: ") {
-        trimmedLine = "c: " + trimmedLine.substr(3).split(", ")
-          .map(correctedLabel).join(", ");
+        let children = trimmedLine.substr(3).split(", ").map(correctedLabel);
+        trimmedLine = "c: " + children.join(", ");
+        if (children.includes(toks[0]))
+          throw toks[0] + " is listed as their own child";
+        if (children.includes(toks[1]))
+          throw toks[1] + " is listed as their own child";
       }
       value.push(trimmedLine);
       i += 1;
@@ -487,7 +492,7 @@ function makeDiv(name, entries, neighbours) {
     var result = document.createElement("ul");
     for (var item of info) {
       var li = document.createElement("li");
-      for (var tok of item.split(/(http.*(?=(\w|$)))/g)) {
+      for (var tok of item.split(/(http[^\s]*(?=(\s|$)))/g)) {
         if (tok.startsWith('http')) {
           let a = document.createElement("a");
           a.appendChild(document.createTextNode(tok));
@@ -783,8 +788,9 @@ function validateTreeStructure(neighbours) {
       let loop = [curr, prev];
       let unroll = prev;
       while (unroll != curr) {
-        if (unroll === null)
+        if (unroll === null) {
           throw "Internal validation error (file a bug!)";
+        }
         unroll = parent[unroll];
         loop.push(unroll);
       }
