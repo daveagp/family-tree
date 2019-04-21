@@ -66,5 +66,6 @@ c: King George#Younger
 ## Disclaimer
 Use your judgment when posting sensitive family information on the internet, e.g. you may consider using `.htaccess` or some other appropriate security.
 
-## Thanks
-Thanks to The [Simpsons Wiki](http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters) for their rich dataset.
+## Etc
+* Thanks to The [Simpsons Wiki](http://simpsons.wikia.com/wiki/Portal:All_Simpson_Characters) for their rich dataset.
+* See https://daveagp.wordpress.com/2018/04/22/family-tree-visualizer/ for an explanation of the general approach.
